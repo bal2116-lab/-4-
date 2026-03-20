@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[KR] 4월 마케팅 예산</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=DM+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#f4f6f9; --card:#fff; --border:#e8ecf2;
+  --text:#1a1f2e; --muted:#7c8799; --dim:#b0b9c6;
+  --blue:#2563eb; --blue-lt:#eff6ff; --blue-bd:#bfdbfe;
+  --green:#059669; --green-lt:#f0fdf4; --green-bd:#a7f3d0;
+  --red:#dc2626; --red-lt:#fef2f2; --red-bd:#fecaca;
+  --amber:#d97706; --amber-lt:#fffbeb; --amber-bd:#fde68a;
+  --indigo:#4f46e5; --slate:#64748b;
+  --navy:#0f172a;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:13px;line-height:1.6;padding:32px;}
+a{color:inherit;text-decoration:none;}
+
+/* ── TOPBAR ── */
+.topbar{
+  display:flex;justify-content:space-between;align-items:flex-end;
+  margin-bottom:28px;flex-wrap:wrap;gap:12px;
+  padding-bottom:20px;border-bottom:2px solid var(--navy);
+}
+.topbar-left{}
+.doc-tag{
+  display:inline-block;font-size:10px;font-weight:700;letter-spacing:2px;
+  color:var(--blue);background:var(--blue-lt);border:1px solid var(--blue-bd);
+  border-radius:4px;padding:2px 9px;margin-bottom:8px;font-family:'DM Mono',monospace;
+}
+.doc-title{font-size:28px;font-weight:900;letter-spacing:-1px;line-height:1.2;}
+.doc-meta{font-size:11px;color:var(--muted);margin-top:5px;font-family:'DM Mono',monospace;}
+.doc-note{
+  font-size:11px;color:#92400e;
+  background:var(--amber-lt);border:1px solid var(--amber-bd);
+  border-radius:8px;padding:8px 14px;align-self:flex-end;max-width:340px;line-height:1.6;
+}
+
+/* ── KPI GRID ── */
+.kpi-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:28px;}
+.kpi{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;padding:18px 16px;
+  display:flex;flex-direction:column;justify-content:space-between;
+  position:relative;overflow:hidden;
+  transition:box-shadow .2s;
+}
+.kpi:hover{box-shadow:0 4px 16px rgba(0,0,0,.08);}
+.kpi::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:4px;
+  border-radius:4px 4px 0 0;
+}
+.kpi.b::before{background:var(--blue);}
+.kpi.a::before{background:var(--amber);}
+.kpi.r::before{background:var(--red);}
+.kpi.n::before{background:var(--navy);}
+.kpi.i::before{background:var(--indigo);}
+.kpi.g::before{background:var(--green);}
+.kpi-label{font-size:10px;color:var(--muted);letter-spacing:.5px;margin-bottom:8px;font-family:'DM Mono',monospace;}
+.kpi-num{font-size:19px;font-weight:900;font-family:'DM Mono',monospace;letter-spacing:-1px;line-height:1.1;}
+.kpi-num.bl{color:var(--blue);}
+.kpi-num.rd{color:var(--red);}
+.kpi-num.gn{color:var(--green);}
+.kpi-foot{margin-top:6px;font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;}
+.pill{
+  display:inline-flex;align-items:center;gap:3px;
+  font-size:10px;font-weight:700;padding:2px 8px;
+  border-radius:100px;font-family:'DM Mono',monospace;margin-top:4px;
+}
+.pill.dn{background:var(--red-lt);color:var(--red);}
+.pill.up{background:var(--green-lt);color:var(--green);}
+
+/* ── SECTION LABEL ── */
+.sec{
+  font-size:11px;font-weight:800;letter-spacing:2px;
+  color:var(--slate);text-transform:uppercase;
+  display:flex;align-items:center;gap:10px;
+  margin-bottom:12px;margin-top:32px;
+}
+.sec::before{content:'';width:4px;height:14px;background:var(--blue);border-radius:2px;}
+.sec::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* ── CARD ── */
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:16px;}
+.card-head{
+  padding:12px 18px;
+  background:#f8f9fc;border-bottom:1px solid var(--border);
+  font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.5px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.card-head .warn{font-size:10px;color:var(--red);font-weight:400;}
+
+/* ── TABLE ── */
+.tbl{width:100%;border-collapse:collapse;}
+.tbl thead tr{background:#f8f9fc;}
+.tbl th{
+  font-size:10px;font-weight:700;color:var(--muted);
+  letter-spacing:.8px;text-transform:uppercase;
+  padding:10px 13px;border-bottom:2px solid var(--border);
+  text-align:left;white-space:nowrap;
+}
+.tbl th.r{text-align:right;}
+.tbl th.c{text-align:center;}
+.tbl td{
+  padding:10px 13px;font-size:12px;
+  border-bottom:1px solid #f1f4f9;
+  vertical-align:middle;
+}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl tr:hover td{background:#fafbfe;}
+.tbl td.num{font-family:'DM Mono',monospace;text-align:right;white-space:nowrap;}
+.tbl td.c{text-align:center;}
+.tbl td.bold{font-weight:700;}
+.tbl td.bl{color:var(--blue);font-weight:700;font-family:'DM Mono',monospace;text-align:right;}
+.tbl td.gn{color:var(--green);font-weight:700;font-family:'DM Mono',monospace;text-align:right;}
+.tbl td.note{font-size:11px;color:var(--muted);}
+.tbl td.muted{color:var(--dim);text-align:right;font-family:'DM Mono',monospace;}
+
+/* category cell */
+.cat{display:inline-block;font-size:10px;font-weight:700;padding:3px 10px;border-radius:5px;letter-spacing:.3px;white-space:nowrap;}
+.cat-p{background:var(--blue-lt);color:#1d4ed8;}
+.cat-o{background:var(--green-lt);color:#065f46;}
+
+/* sub-total rows */
+.tbl tr.perf-total td{background:#eff6ff;font-weight:800;border-top:2px solid var(--blue-bd);border-bottom:2px solid var(--blue-bd);}
+.tbl tr.other-total td{background:var(--green-lt);font-weight:800;border-top:2px solid var(--green-bd);border-bottom:2px solid var(--green-bd);}
+
+/* ── CHANGE BADGE ── */
+.chg{display:inline-flex;align-items:center;font-family:'DM Mono',monospace;font-size:11px;font-weight:700;padding:2px 8px;border-radius:100px;white-space:nowrap;}
+.chg.dn{background:var(--red-lt);color:var(--red);}
+.chg.up{background:var(--green-lt);color:var(--green);}
+.chg.zr{background:#f1f5f9;color:var(--slate);}
+
+/* diff */
+.ddn{color:var(--red);font-weight:700;font-family:'DM Mono',monospace;text-align:right;white-space:nowrap;}
+.dup{color:var(--green);font-weight:700;font-family:'DM Mono',monospace;text-align:right;}
+.dzr{color:var(--dim);font-family:'DM Mono',monospace;text-align:right;}
+
+/* ── SUMMARY PANEL (dark) ── */
+.summary-dark{
+  background:var(--navy);border-radius:14px;
+  padding:24px 28px;margin-bottom:28px;
+  display:grid;grid-template-columns:1fr auto 1fr auto 1fr;
+  gap:0;align-items:center;
+}
+.sd-item{}
+.sd-lbl{font-size:10px;color:#64748b;font-family:'DM Mono',monospace;letter-spacing:.5px;margin-bottom:6px;}
+.sd-val{font-size:28px;font-weight:900;font-family:'DM Mono',monospace;color:#fff;letter-spacing:-1.5px;line-height:1.1;}
+.sd-sub{font-size:10px;color:#475569;font-family:'DM Mono',monospace;margin-top:3px;}
+.sd-divider{width:1px;height:56px;background:#1e293b;margin:0 28px;}
+.sd-breakdown{background:#1e293b;border-radius:10px;padding:14px 18px;}
+.sd-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid #334155;gap:24px;}
+.sd-row:last-child{border-bottom:none;}
+.sd-row .s-name{font-size:11px;color:#94a3b8;}
+.sd-row .s-budget{font-family:'DM Mono',monospace;font-size:12px;color:#cbd5e1;font-weight:600;}
+.sd-row .s-pay{font-family:'DM Mono',monospace;font-size:12px;color:#fbbf24;font-weight:700;}
+.sd-row.total-row .s-name{color:#fff;font-weight:700;}
+.sd-row.total-row .s-budget{color:#f87171;font-size:14px;font-weight:800;}
+.sd-row.total-row .s-pay{color:#fbbf24;font-size:14px;font-weight:800;}
+
+/* ── VISUAL BAR ── */
+.vis-bar-wrap{margin-bottom:28px;}
+.vis-bar-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;padding:20px 22px;
+}
+.vb-title{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.5px;margin-bottom:18px;text-transform:uppercase;}
+.vb-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.vb-row:last-child{margin-bottom:0;}
+.vb-name{width:120px;font-size:12px;font-weight:600;color:var(--text);flex-shrink:0;}
+.vb-track{flex:1;background:#f1f4f9;border-radius:100px;height:8px;overflow:hidden;}
+.vb-fill{height:100%;border-radius:100px;}
+.vb-val{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);width:90px;text-align:right;flex-shrink:0;}
+.vb-chg{width:64px;flex-shrink:0;text-align:right;}
+
+/* ── 2/3 COL ── */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:16px;}
+
+/* ── COMMENT ── */
+.comment{
+  background:var(--amber-lt);border:1px solid var(--amber-bd);
+  border-left:4px solid var(--amber);
+  border-radius:10px;padding:18px 20px;
+  font-size:12px;line-height:2;color:#78350f;
+  margin-bottom:28px;
+}
+.comment b{color:#92400e;display:block;margin-bottom:2px;}
+
+/* ── BALANCE CARDS ── */
+.bal-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+.bal-head{
+  padding:10px 16px;
+  font-size:11px;font-weight:700;color:#fff;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.bal-date{font-family:'DM Mono',monospace;font-size:10px;opacity:.75;}
+.bh-cny{background:#b45309;}
+.bh-kuno{background:#6d28d9;}
+.bh-dv{background:#1d4ed8;}
+.bh-kk1{background:#b45309;}
+.bh-kk2{background:#92400e;}
+.bh-baem{background:#b91c1c;}
+.bal-body{padding:16px;}
+.bal-amount{font-size:22px;font-weight:900;font-family:'DM Mono',monospace;letter-spacing:-1px;margin-bottom:12px;}
+.bal-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid #f1f4f9;font-size:11px;}
+.bal-row:last-child{border-bottom:none;}
+.bl-lbl{color:var(--muted);}
+.bl-val{font-family:'DM Mono',monospace;font-weight:600;}
+.bl-val.hi{font-weight:800;color:var(--indigo);}
+.prog-wrap{margin-top:10px;background:#f1f4f9;border-radius:4px;height:6px;overflow:hidden;}
+.prog-fill{height:100%;border-radius:4px;background:linear-gradient(to right,#2563eb,#60a5fa);}
+
+/* LARGE AMOUNT */
+.big-amount{font-size:30px;font-weight:900;font-family:'DM Mono',monospace;letter-spacing:-2px;}
+
+@media(max-width:1100px){.kpi-grid{grid-template-columns:repeat(3,1fr);} .summary-dark{grid-template-columns:1fr;} .sd-divider{display:none;} }
+@media(max-width:750px){body{padding:16px;} .kpi-grid{grid-template-columns:repeat(2,1fr);} .two-col,.three-col{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+
+<!-- ── TOPBAR ── -->
+<div class="topbar">
+  <div class="topbar-left">
+    <div class="doc-tag">MARKETING BUDGET · KR</div>
+    <div class="doc-title">[KR] 4월 마케팅 예산</div>
+    <div class="doc-meta">기준일 2026. 3. 20 &nbsp;·&nbsp; 작성: 마케팅팀</div>
+  </div>
+  <div class="doc-note">⚠ 광고 운영현황에 따라 매체별 운영 금액이<br>일부 조정될 수 있습니다.</div>
+</div>
+
+<!-- ── KPI ── -->
+<div class="kpi-grid">
+  <div class="kpi b">
+    <div class="kpi-label">금월 예산</div>
+    <div class="kpi-num bl">24,750,000</div>
+    <div class="kpi-foot">원 (VAT 포함)</div>
+  </div>
+  <div class="kpi a">
+    <div class="kpi-label">전월 예산</div>
+    <div class="kpi-num">32,120,000</div>
+    <div class="kpi-foot">원 (VAT 포함)</div>
+  </div>
+  <div class="kpi r">
+    <div class="kpi-label">전월대비 증감</div>
+    <div class="kpi-num rd">▼ 23%</div>
+    <div class="pill dn">▼ 7,370,000원</div>
+  </div>
+  <div class="kpi n">
+    <div class="kpi-label">지급요청 합계</div>
+    <div class="kpi-num" style="font-size:16px;">23,265,000</div>
+    <div class="kpi-foot">원 (VAT 포함)</div>
+  </div>
+  <div class="kpi i">
+    <div class="kpi-label">퍼포먼스 예산</div>
+    <div class="kpi-num bl" style="font-size:16px;">16,500,000</div>
+    <div class="kpi-foot">지급 15,015,000원</div>
+  </div>
+  <div class="kpi g">
+    <div class="kpi-label">그외 광고 예산</div>
+    <div class="kpi-num gn" style="font-size:16px;">8,250,000</div>
+    <div class="kpi-foot">지급 8,250,000원</div>
+  </div>
+</div>
+
+<!-- ── SUMMARY DARK ── -->
+<div class="summary-dark">
+  <div class="sd-item">
+    <div class="sd-lbl">TOTAL 예산 합계</div>
+    <div class="sd-val">₩24,750,000</div>
+    <div class="sd-sub">VAT 포함</div>
+  </div>
+  <div class="sd-divider"></div>
+  <div class="sd-item">
+    <div class="sd-lbl">지급요청액 합계</div>
+    <div class="sd-val" style="color:#fbbf24;">₩23,265,000</div>
+    <div class="sd-sub">VAT 포함</div>
+  </div>
+  <div class="sd-divider"></div>
+  <div class="sd-item">
+    <div class="sd-breakdown">
+      <div style="font-size:10px;color:#64748b;letter-spacing:.5px;margin-bottom:8px;font-family:'DM Mono',monospace;">분류별 예산 vs 지급요청</div>
+      <div class="sd-row">
+        <span class="s-name">퍼포먼스</span>
+        <span class="s-budget">16,500,000</span>
+        <span class="s-pay">15,015,000</span>
+      </div>
+      <div class="sd-row">
+        <span class="s-name">그외 광고</span>
+        <span class="s-budget">8,250,000</span>
+        <span class="s-pay">8,250,000</span>
+      </div>
+      <div class="sd-row total-row" style="border-top:1px solid #334155;padding-top:8px;margin-top:4px;">
+        <span class="s-name">총액</span>
+        <span class="s-budget">24,750,000</span>
+        <span class="s-pay">23,265,000</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 매체별 예산 ── -->
+<div class="sec">매체별 예산 상세</div>
+<div class="card">
+  <div class="card-head">
+    4월 매체별 예산 · 지급요청액
+    <span style="font-size:10px;color:var(--muted);">*잔액을 고려해서 필요액만큼 차액 지급</span>
+  </div>
+  <table class="tbl">
+    <thead>
+      <tr>
+        <th>분류</th>
+        <th>매체명</th>
+        <th class="r">현재잔액</th>
+        <th class="r">목표 일예산</th>
+        <th class="r">목표 월예산</th>
+        <th class="r">VAT</th>
+        <th class="r">총액</th>
+        <th class="r">지급요청액</th>
+        <th>비고</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td rowspan="7" style="text-align:center;vertical-align:middle;border-right:3px solid #bfdbfe;background:#f8fbff;">
+          <span class="cat cat-p">퍼포먼스</span>
+        </td>
+        <td class="bold">페이스북</td>
+        <td class="num">10,511,003</td>
+        <td class="num">170,000</td>
+        <td class="num">5,100,000</td>
+        <td class="num">510,000</td>
+        <td class="num bold">5,610,000</td>
+        <td class="bl">5,610,000</td>
+        <td class="note">자사동장내 입금</td>
+      </tr>
+      <tr>
+        <td class="bold">DV360</td>
+        <td class="num">2,128,965</td>
+        <td class="num">100,000</td>
+        <td class="num">3,000,000</td>
+        <td class="num">300,000</td>
+        <td class="num bold">3,300,000</td>
+        <td class="bl">3,300,000</td>
+        <td class="note">후불결제_5월 지급(램포스트)+선충전식(템포스트) / 램포스트 잔액 표기</td>
+      </tr>
+      <tr>
+        <td class="bold">큐노</td>
+        <td class="num">10,569,350</td>
+        <td class="num">40,000</td>
+        <td class="num">1,200,000</td>
+        <td class="num">120,000</td>
+        <td class="num bold">1,320,000</td>
+        <td class="muted">0</td>
+        <td class="note">대행사를 통한 선충전식 / 기충전금 내에서 4월 운영</td>
+      </tr>
+      <tr>
+        <td class="bold">트위터</td>
+        <td class="muted">후불결제</td>
+        <td class="num">100,000</td>
+        <td class="num">3,000,000</td>
+        <td class="num">300,000</td>
+        <td class="num bold">3,300,000</td>
+        <td class="bl">3,300,000</td>
+        <td class="note">후불결제_5월 지급</td>
+      </tr>
+      <tr>
+        <td class="bold">RTB하우스</td>
+        <td class="muted">후불결제</td>
+        <td class="num">80,000</td>
+        <td class="num">2,400,000</td>
+        <td class="num">240,000</td>
+        <td class="num bold">2,640,000</td>
+        <td class="bl">2,640,000</td>
+        <td class="note">후불결제_5월 지급</td>
+      </tr>
+      <tr>
+        <td class="bold">에드픽</td>
+        <td class="muted">후불결제</td>
+        <td class="num">5,000</td>
+        <td class="num">150,000</td>
+        <td class="num">15,000</td>
+        <td class="num bold">165,000</td>
+        <td class="bl">165,000</td>
+        <td class="note">후불결제_5월 지급</td>
+      </tr>
+      <tr>
+        <td class="bold">CNY</td>
+        <td class="num">399,000</td>
+        <td class="num">5,000</td>
+        <td class="num">150,000</td>
+        <td class="num">15,000</td>
+        <td class="num bold">165,000</td>
+        <td class="muted">0</td>
+        <td class="note">대행사를 통한 선충전식 / 기충전금 내에서 4월 운영</td>
+      </tr>
+      <tr class="perf-total">
+        <td colspan="2" style="color:var(--blue);">퍼포먼스 소계</td>
+        <td class="muted">—</td>
+        <td class="bl">500,000</td>
+        <td class="bl">15,000,000</td>
+        <td class="bl">1,500,000</td>
+        <td class="bl">16,500,000</td>
+        <td class="bl">15,015,000</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td rowspan="3" style="text-align:center;vertical-align:middle;border-right:3px solid #a7f3d0;background:#f6fef9;">
+          <span class="cat cat-o">그외 광고</span>
+        </td>
+        <td class="bold">리마케팅_알림톡</td>
+        <td class="muted">—</td>
+        <td class="muted">—</td>
+        <td class="num">4,000,000</td>
+        <td class="num">400,000</td>
+        <td class="num bold">4,400,000</td>
+        <td class="gn">4,400,000</td>
+        <td class="note">인포뱅크 알림톡 사용비용 지급 (전월 사용분에 대한 후불결제)</td>
+      </tr>
+      <tr>
+        <td class="bold">컬쳐랜드</td>
+        <td class="muted">—</td>
+        <td class="muted">—</td>
+        <td class="num">500,000</td>
+        <td class="num">50,000</td>
+        <td class="num bold">550,000</td>
+        <td class="gn">550,000</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td class="bold">언론송출</td>
+        <td class="muted">—</td>
+        <td class="muted">—</td>
+        <td class="num">3,000,000</td>
+        <td class="num">300,000</td>
+        <td class="num bold">3,300,000</td>
+        <td class="gn">3,300,000</td>
+        <td></td>
+      </tr>
+      <tr class="other-total">
+        <td colspan="2" style="color:var(--green);">그외 광고 소계</td>
+        <td class="muted">—</td>
+        <td class="muted">—</td>
+        <td class="gn">7,500,000</td>
+        <td class="gn">750,000</td>
+        <td class="gn">8,250,000</td>
+        <td class="gn">8,250,000</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ── 시각화 바 차트 ── -->
+<div class="sec">매체별 4월 예산 비중</div>
+<div class="vis-bar-card" style="margin-bottom:28px;">
+  <div class="vb-title">매체별 월 예산 (4월 기준)</div>
+  <div class="vb-row">
+    <div class="vb-name">페이스북</div>
+    <div class="vb-track"><div class="vb-fill" style="width:100%;background:linear-gradient(to right,#2563eb,#60a5fa);"></div></div>
+    <div class="vb-val">5,100,000</div>
+    <div class="vb-chg"><span class="chg dn">▼45%</span></div>
+  </div>
+  <div class="vb-row">
+    <div class="vb-name">트위터</div>
+    <div class="vb-track"><div class="vb-fill" style="width:58.8%;background:linear-gradient(to right,#0ea5e9,#38bdf8);"></div></div>
+    <div class="vb-val">3,000,000</div>
+    <div class="vb-chg"><span class="chg up">▲94%</span></div>
+  </div>
+  <div class="vb-row">
+    <div class="vb-name">DV360</div>
+    <div class="vb-track"><div class="vb-fill" style="width:58.8%;background:linear-gradient(to right,#4f46e5,#818cf8);"></div></div>
+    <div class="vb-val">3,000,000</div>
+    <div class="vb-chg"><span class="chg dn">▼3%</span></div>
+  </div>
+  <div class="vb-row">
+    <div class="vb-name">RTB하우스</div>
+    <div class="vb-track"><div class="vb-fill" style="width:47%;background:linear-gradient(to right,#7c3aed,#a78bfa);"></div></div>
+    <div class="vb-val">2,400,000</div>
+    <div class="vb-chg"><span class="chg dn">▼48%</span></div>
+  </div>
+  <div class="vb-row">
+    <div class="vb-name">큐노</div>
+    <div class="vb-track"><div class="vb-fill" style="width:23.5%;background:linear-gradient(to right,#0d9488,#2dd4bf);"></div></div>
+    <div class="vb-val">1,200,000</div>
+    <div class="vb-chg"><span class="chg dn">▼23%</span></div>
+  </div>
+  <div class="vb-row">
+    <div class="vb-name">CNY / 에드픽</div>
+    <div class="vb-track"><div class="vb-fill" style="width:2.9%;background:linear-gradient(to right,#d97706,#fbbf24);"></div></div>
+    <div class="vb-val">150,000</div>
+    <div class="vb-chg"><span class="chg dn">▼52%</span></div>
+  </div>
+  <div style="height:1px;background:var(--border);margin:14px 0;"></div>
+  <div class="vb-row">
+    <div class="vb-name" style="color:var(--green);font-weight:700;">리마케팅_알림톡</div>
+    <div class="vb-track"><div class="vb-fill" style="width:78.4%;background:linear-gradient(to right,#059669,#34d399);"></div></div>
+    <div class="vb-val">4,000,000</div>
+    <div class="vb-chg"><span class="chg zr">▲0%</span></div>
+  </div>
+  <div class="vb-row">
+    <div class="vb-name" style="color:var(--green);font-weight:700;">언론송출</div>
+    <div class="vb-track"><div class="vb-fill" style="width:58.8%;background:linear-gradient(to right,#16a34a,#4ade80);"></div></div>
+    <div class="vb-val">3,000,000</div>
+    <div class="vb-chg"><span class="chg zr">▲0%</span></div>
+  </div>
+  <div class="vb-row">
+    <div class="vb-name" style="color:var(--green);font-weight:700;">컬쳐랜드</div>
+    <div class="vb-track"><div class="vb-fill" style="width:9.8%;background:linear-gradient(to right,#65a30d,#a3e635);"></div></div>
+    <div class="vb-val">500,000</div>
+    <div class="vb-chg"><span class="chg zr">▲0%</span></div>
+  </div>
+</div>
+
+<!-- ── 전월대비 + 소진추정액 ── -->
+<div class="sec">전월 비교 분석</div>
+<div class="two-col">
+
+  <div class="card" style="margin-bottom:0;">
+    <div class="card-head">전월대비 매체별 증감액</div>
+    <table class="tbl">
+      <thead>
+        <tr><th>매체명</th><th class="r">3월</th><th class="r">4월</th><th class="c">증감률</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>구글애즈</td><td class="num">1,023,000</td><td class="num">0</td><td class="c"><span class="chg dn">▼100%</span></td></tr>
+        <tr><td>페이스북</td><td class="num">10,230,000</td><td class="num">5,610,000</td><td class="c"><span class="chg dn">▼45%</span></td></tr>
+        <tr><td>DV360</td><td class="num">3,410,000</td><td class="num">3,300,000</td><td class="c"><span class="chg dn">▼3%</span></td></tr>
+        <tr><td>큐노</td><td class="num">1,705,000</td><td class="num">1,320,000</td><td class="c"><span class="chg dn">▼23%</span></td></tr>
+        <tr><td>트위터</td><td class="num">1,705,000</td><td class="num">3,300,000</td><td class="c"><span class="chg up">▲94%</span></td></tr>
+        <tr><td>RTB하우스</td><td class="num">5,115,000</td><td class="num">2,640,000</td><td class="c"><span class="chg dn">▼48%</span></td></tr>
+        <tr><td>에드픽</td><td class="num">341,000</td><td class="num">165,000</td><td class="c"><span class="chg dn">▼52%</span></td></tr>
+        <tr><td>CNY</td><td class="num">341,000</td><td class="num">165,000</td><td class="c"><span class="chg dn">▼52%</span></td></tr>
+        <tr><td>리마케팅_알림톡</td><td class="num">4,400,000</td><td class="num">4,400,000</td><td class="c"><span class="chg zr">▲0%</span></td></tr>
+        <tr><td>컬쳐랜드</td><td class="num">550,000</td><td class="num">550,000</td><td class="c"><span class="chg zr">▲0%</span></td></tr>
+        <tr><td>언론송출</td><td class="num">3,300,000</td><td class="num">3,300,000</td><td class="c"><span class="chg zr">▲0%</span></td></tr>
+        <tr style="background:#f8f9fc;font-weight:800;">
+          <td>TOTAL</td><td class="num">32,120,000</td><td class="num">24,750,000</td>
+          <td class="c"><span class="chg dn">▼23%</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card" style="margin-bottom:0;">
+    <div class="card-head">
+      전월 예산 대비 소진추정액
+      <span class="warn">*추정치</span>
+    </div>
+    <table class="tbl">
+      <thead>
+        <tr><th>매체명</th><th class="r">3월 예산</th><th class="r">3월 소진 추정</th><th class="r">편차</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>구글애즈</td><td class="num">1,023,000</td><td class="num">0</td><td class="ddn">▼1,023,000</td></tr>
+        <tr><td>페이스북</td><td class="num">10,230,000</td><td class="num">7,760,000</td><td class="ddn">▼2,470,000</td></tr>
+        <tr><td>DV360</td><td class="num">3,410,000</td><td class="num">2,000,000</td><td class="ddn">▼1,410,000</td></tr>
+        <tr><td>큐노</td><td class="num">1,705,000</td><td class="num">1,300,000</td><td class="ddn">▼405,000</td></tr>
+        <tr><td>트위터</td><td class="num">1,705,000</td><td class="num">1,400,000</td><td class="ddn">▼305,000</td></tr>
+        <tr><td>RTB하우스</td><td class="num">5,115,000</td><td class="num">2,860,000</td><td class="ddn">▼2,255,000</td></tr>
+        <tr><td>에드픽</td><td class="num">341,000</td><td class="num">400,000</td><td class="dup">▲59,000</td></tr>
+        <tr><td>CNY</td><td class="num">341,000</td><td class="num">300,000</td><td class="ddn">▼41,000</td></tr>
+        <tr><td>리마케팅_알림톡</td><td class="num">4,400,000</td><td class="num">4,400,000</td><td class="dzr">▲0</td></tr>
+        <tr><td>컬쳐랜드</td><td class="num">550,000</td><td class="num">550,000</td><td class="dzr">▲0</td></tr>
+        <tr><td>언론송출</td><td class="num">3,300,000</td><td class="num">0</td><td class="ddn">▼3,300,000</td></tr>
+        <tr style="background:#f8f9fc;font-weight:800;">
+          <td>TOTAL</td><td class="num">32,120,000</td><td class="num">20,970,000</td>
+          <td class="ddn" style="font-size:13px;">▼11,150,000</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ── COMMENT ── -->
+<div class="sec" style="margin-top:28px;">운영 코멘트</div>
+<div class="comment">
+  <b>📊 3월 19일까지의 운영 데이터</b>
+  광고비 <strong>10,849,396원</strong> &nbsp;|&nbsp; 가입CPA <strong>4,425원</strong> &nbsp;|&nbsp; 총결율 <strong>11.8%</strong> &nbsp;|&nbsp; 총결CPA <strong>37,541원</strong>
+  <br>
+  <b>📈 전월동기간대비</b>
+  광고비 <strong>▼ 약 413만원</strong> &nbsp;|&nbsp; 가입CPA <strong>▲316원</strong> &nbsp;|&nbsp; 총결율 <strong>▲1.1%</strong> &nbsp;|&nbsp; 총결CPA <strong>▼791원</strong>
+  <br>
+  <b>🎯 익월 세부 목표</b>
+  매체별 가입 성과 개선 및 안정화
+</div>
+
+<!-- ── 잔액 ── -->
+<div class="sec">매체별 잔액 현황</div>
+<div class="three-col">
+
+  <div class="bal-card">
+    <div class="bal-head bh-cny"><span>CNY 잔액</span><span class="bal-date">2026.3.20</span></div>
+    <div class="bal-body">
+      <div class="bal-amount" style="color:#b45309;">399,000<small style="font-size:14px;color:var(--muted);font-weight:400;">원</small></div>
+      <div class="bal-row"><span class="bl-lbl">기간 (3.1~3.20) 소진</span><span class="bl-val">158,000</span></div>
+      <div class="bal-row"><span class="bl-lbl">충전 금액</span><span class="bl-val">—</span></div>
+      <div class="bal-row"><span class="bl-lbl">잔여금액</span><span class="bl-val hi">399,000</span></div>
+    </div>
+  </div>
+
+  <div class="bal-card">
+    <div class="bal-head bh-kuno"><span>큐노 잔액</span><span class="bal-date">2026.3.20</span></div>
+    <div class="bal-body">
+      <div class="bal-amount" style="color:#6d28d9;">10,569,350<small style="font-size:14px;color:var(--muted);font-weight:400;">원</small></div>
+      <div class="bal-row"><span class="bl-lbl">충전/이월 금액</span><span class="bl-val">10,403,000 / 11,443,300</span></div>
+      <div class="bal-row"><span class="bl-lbl">3월 소진금액</span><span class="bl-val">794,500 / 873,950</span></div>
+      <div class="bal-row"><span class="bl-lbl">3월 남은금액</span><span class="bl-val hi">9,608,500 / 10,569,350</span></div>
+    </div>
+  </div>
+
+  <div class="bal-card">
+    <div class="bal-head bh-dv"><span>DV360 (램포스트) 잔액</span><span class="bal-date">2026.3.20</span></div>
+    <div class="bal-body">
+      <div class="bal-amount" style="color:#1d4ed8;">2,128,965<small style="font-size:14px;color:var(--muted);font-weight:400;">원</small></div>
+      <div class="bal-row"><span class="bl-lbl">Spend / Cost Revenue</span><span class="bl-val">2,128,965</span></div>
+      <div class="bal-row"><span class="bl-lbl">Budget</span><span class="bl-val">2,800,000</span></div>
+      <div class="bal-row"><span class="bl-lbl">Balance</span><span class="bl-val">686,859</span></div>
+      <div class="bal-row"><span class="bl-lbl">Budget 소진율</span><span class="bl-val hi">75.5%</span></div>
+      <div class="prog-wrap"><div class="prog-fill" style="width:75.5%;"></div></div>
+    </div>
+  </div>
+
+  <div class="bal-card">
+    <div class="bal-head bh-kk1"><span>카카오플러스친구 잔액</span><span class="bal-date">2026.3.20</span></div>
+    <div class="bal-body">
+      <div class="bal-amount" style="color:#92400e;">4,319,920<small style="font-size:14px;color:var(--muted);font-weight:400;">원</small></div>
+      <div class="bal-row"><span class="bl-lbl">유상 + 무상캐시 합산</span><span class="bl-val hi">4,319,920</span></div>
+    </div>
+  </div>
+
+  <div class="bal-card">
+    <div class="bal-head bh-kk2"><span>카카오모먼트 잔액</span><span class="bal-date">2026.3.20</span></div>
+    <div class="bal-body">
+      <div class="bal-amount" style="color:#92400e;">1,048,399<small style="font-size:14px;color:var(--muted);font-weight:400;">원</small></div>
+      <div class="bal-row"><span class="bl-lbl">캐시 (유상)</span><span class="bl-val">1,048,339.6원</span></div>
+      <div class="bal-row"><span class="bl-lbl">캐시 (무상)</span><span class="bl-val">0원</span></div>
+    </div>
+  </div>
+
+  <div class="bal-card">
+    <div class="bal-head bh-baem"><span>템핑 잔액</span><span class="bal-date">2026.3.20</span></div>
+    <div class="bal-body">
+      <div style="font-size:11px;color:var(--muted);margin-bottom:8px;">현재 보유 금액</div>
+      <div class="big-amount" style="color:#991b1b;">₩ 3,107,500</div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
